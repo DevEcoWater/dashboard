@@ -41,7 +41,7 @@ export default function RootLayout({
         <SessionClient>
           <SidebarProvider>
             <UiSidebarProvider>
-              <ThemeProvider attribute="class" defaultTheme="system">
+              <ThemeProvider attribute="class" defaultTheme="light">
                 <AppSidebar />
                 <SidebarInset>
                   <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
