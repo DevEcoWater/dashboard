@@ -1,100 +1,105 @@
-import {
-  Users,
-  ArrowUp,
-  ArrowDown,
-  DollarSign,
-  Package,
-  Shirt,
-  LucideIcon,
-  Icon,
-} from "lucide-react";
+import { Gauge, LucideIcon } from "lucide-react";
 import AnalyticsCard from "./analytics-card";
+
+import React from "react";
+import { Skeleton } from "../ui/skeleton";
+
+interface ISummary {
+  meters: any;
+  isLoading: boolean;
+}
 
 interface SummaryCardProps {
   title: string;
   value: string;
   icon: LucideIcon;
-  change: string;
-  changeType: string;
+  isLoading: boolean;
+  status: string;
 }
 
 const SummaryCard: React.FC<SummaryCardProps> = ({
   title,
   value,
   icon: Icon,
-  change,
-  changeType,
+  status,
+  isLoading,
 }) => {
   return (
-    <div className="p-6 rounded-md flex-auto dark:bg-tertiary bg-slate-100 border">
+    <div
+      className={`p-6 rounded-xl flex-auto border dark:bg-tertiary bg-white shadow-md`}
+    >
       <div className="flex items-center gap-5 justify-center max-md:justify-between">
         <div>
-          <p>{title}</p>
-          <h2 className="font-bold text-2xl">{value}</h2>
+          {isLoading ? (
+            <div className="flex flex-col gap-4">
+              <Skeleton className="h-2 w-[100px] bg-gray-300 rounded-full" />
+              <Skeleton className="h-2 w-[100px] bg-gray-300 rounded-full" />
+            </div>
+          ) : (
+            <>
+              <p>{title}</p>
+              <h2 className="font-bold text-2xl">{value}</h2>
+            </>
+          )}
         </div>
         <div>
           <Icon
-            className="bg-primary text-white p-3 rounded-full"
+            style={{ backgroundColor: status }}
+            className=" text-white p-3 rounded-full"
             size={50}
           />
         </div>
-      </div>
-      <div
-        className={`flex gap-1 mt-2 md:justify-center
-        ${
-          changeType === "increase"
-            ? "text-green-500"
-            : "text-red-500"
-        }
-        `}
-      >
-        {changeType === "increase" ? (
-          <ArrowUp size={20} />
-        ) : (
-          <ArrowDown size={20} />
-        )}
-        <span className="text-sm">{change}</span>
       </div>
     </div>
   );
 };
 
-const Summary = () => {
+const Summary: React.FC<ISummary> = ({ meters, isLoading }) => {
+  const statusColors: Record<string, string> = {
+    active: "#22BB33",
+    inactive: "#f0ad4e",
+    error: "#fe3839",
+  };
+
+  const counts =
+    !isLoading &&
+    meters.reduce(
+      (acc: Record<string, number>, meter: any) => {
+        acc[meter.status] = (acc[meter.status] || 0) + 1;
+        return acc;
+      },
+      { active: 0, warning: 0, error: 0 }
+    );
+
   const summaryData = [
     {
-      title: "Orders",
-      value: "1,342",
-      icon: Package,
-      change: "+30% since last year",
-      changeType: "increase",
+      title: "Total",
+      value: !isLoading && meters.length.toString(),
+      icon: Gauge,
+      status: "#2463EB",
     },
     {
-      title: "Revenue",
-      value: "$29,072",
-      icon: DollarSign,
-      change: "-80% since last year",
-      changeType: "decrease",
+      title: "En linea",
+      value: !isLoading && counts.active.toString(),
+      icon: Gauge,
+      status: statusColors.active,
     },
     {
-      title: "Customers",
-      value: "3,242",
-      icon: Users,
-      change: "+10% since last year",
-      changeType: "increase",
+      title: "Alerta",
+      value: !isLoading && counts.inactive.toString(),
+      icon: Gauge,
+      status: statusColors.inactive,
     },
     {
-      title: "Products",
-      value: "20",
-      icon: Shirt,
-      change: "-11% since last year",
-      changeType: "decrease",
+      title: "Error",
+      value: !isLoading && counts.error.toString(),
+      icon: Gauge,
+      status: statusColors.error,
     },
   ];
+
   return (
-    <AnalyticsCard
-      title="Summary"
-      subTitle="2024 Year Summary"
-    >
+    <AnalyticsCard>
       <div className="grid xl:grid-cols-4 md:grid-cols-2 gap-10 mb-3">
         {summaryData.map((data, index) => (
           <SummaryCard
@@ -102,8 +107,8 @@ const Summary = () => {
             title={data.title}
             value={data.value}
             icon={data.icon}
-            change={data.change}
-            changeType={data.changeType}
+            status={data.status}
+            isLoading={isLoading}
           />
         ))}
       </div>

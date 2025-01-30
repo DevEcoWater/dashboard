@@ -10,14 +10,12 @@ export default function LogOutButton() {
   return (
     <div>
       <Button asChild onClick={() => signOut()}>
-        <Link href={"/"} className="flex gap-2">
+        <Link href={"/"} className="flex gap-2 w-full">
           <LogOut />
           <span
-            className={`${!isOpen && "max-md:hidden"} ${
-              isOpen && "hidden"
-            }`}
+            className={`${!isOpen && "max-md:hidden"} ${isOpen && "hidden"}`}
           >
-            Log Out
+            Salir
           </span>
         </Link>
       </Button>

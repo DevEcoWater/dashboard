@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Logo from "./logo";
 import MenuToggle from "./menu-toggle";
 import { ModeToggle } from "./mode-toggle";
@@ -24,21 +20,13 @@ const Navbar = (session: NavbarProps) => {
 
   const user = session.session?.user;
 
-  // if (loginRoute || registerRoute) return;
-
   useEffect(() => {
     if (!loginRoute && !onboardingRoute && !registerRoute) {
       setIsLoading(false);
     }
   }, [loginRoute, registerRoute, onboardingRoute]);
 
-  if (
-    loading ||
-    loginRoute ||
-    registerRoute ||
-    onboardingRoute
-  )
-    return null;
+  if (loading || loginRoute || registerRoute || onboardingRoute) return null;
   return (
     <nav className="py-4 border-b">
       <div className="md:w-[95%] w-[92%] mx-auto flex items-center justify-between">
@@ -46,11 +34,7 @@ const Navbar = (session: NavbarProps) => {
           <Logo />
           <MenuToggle />
         </div>
-        <div className="flex gap-8 items-center">
-          <ModeToggle />
-          <span className="max-md:hidden">
-            Welcome Back {user?.name} 👋
-          </span>
+        <div className="flex gap-4 items-center">
           <Avatar>
             <AvatarImage src={user?.image ?? undefined} />
             <AvatarFallback>ME</AvatarFallback>

@@ -9,12 +9,7 @@ export default function Logo() {
   const { isOpen } = useMenuStore();
   return (
     <Link href={"/"} className="flex items-center gap-2">
-      <Image
-        src={"logo-icon.svg"}
-        width={30}
-        height={30}
-        alt="logo icon"
-      />
+      <Image src={"/eco-logo.png"} width={40} height={40} alt="logo icon" />
       <AnimatePresence initial={false}>
         {!isOpen && (
           <motion.h1
@@ -24,7 +19,7 @@ export default function Logo() {
             transition={{ duration: 0.3 }}
             className="text-xl font-semibold max-md:hidden whitespace-nowrap"
           >
-            Nexa Dashboard
+            Eco Water
           </motion.h1>
         )}
       </AnimatePresence>

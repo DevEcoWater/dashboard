@@ -1,14 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  House,
-  Users,
-  Package,
-  Shirt,
-  Component,
-  Icon,
-} from "lucide-react";
+import { House, Users, Map } from "lucide-react";
 import { usePathname } from "next/navigation";
 import {
   Tooltip,
@@ -17,17 +10,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
+import LogOutButton from "../authenticate/logout-button";
 
 const menuItems = [
-  { href: "/", label: "Dashboard", icon: House },
-  { href: "/customers", label: "Customers", icon: Users },
-  { href: "/orders", label: "Orders", icon: Package },
-  { href: "/products", label: "Products", icon: Shirt },
-  {
-    href: "/team",
-    label: "Team",
-    icon: Component,
-  },
+  { href: "/users", label: "Usuarios", icon: Users },
+  { href: "/mapa", label: "Mapa", icon: Map },
 ];
 
 const MenuLinks = ({ isOpen }: { isOpen: boolean }) => {
@@ -48,11 +35,10 @@ const MenuLinks = ({ isOpen }: { isOpen: boolean }) => {
 
   return (
     <TooltipProvider>
-      <ul className="flex flex-col justify-center gap-10">
+      <ul className="flex flex-col justify-center gap-5 w-full p-4">
         {menuItems.map(({ href, label, icon: Icon }) => {
           const isActive =
-            (pathname.includes(href) && href.length > 1) ||
-            pathname === href;
+            (pathname.includes(href) && href.length > 1) || pathname === href;
 
           return (
             <li key={href}>
@@ -60,18 +46,16 @@ const MenuLinks = ({ isOpen }: { isOpen: boolean }) => {
                 <TooltipTrigger asChild>
                   <Link href={href}>
                     <motion.div
-                      className="flex gap-4 items-center py-1 rounded-md px-4"
+                      className="flex gap-2 items-center py-2 rounded-xl px-4"
                       variants={linkVariants}
-                      animate={
-                        isActive ? "active" : "inactive"
-                      }
+                      animate={isActive ? "active" : "inactive"}
                       transition={{ duration: 0.3 }}
                     >
-                      <Icon size={23} className="mb-1" />
+                      <Icon size={18} />
                       <span
                         className={`max-md:hidden ${
                           isOpen && "hidden"
-                        }`}
+                        } text-sm`}
                       >
                         {label}
                       </span>
@@ -88,6 +72,7 @@ const MenuLinks = ({ isOpen }: { isOpen: boolean }) => {
           );
         })}
       </ul>
+      <LogOutButton />
     </TooltipProvider>
   );
 };
