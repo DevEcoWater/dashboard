@@ -22,7 +22,7 @@ const MeterDetails = () => {
   if (isLoading)
     return (
       <div className="flex items-center justify-center w-full h-full">
-        <Loader />;
+        <Loader />
       </div>
     );
   if (!meter) return <p>No meter found</p>;
@@ -31,7 +31,10 @@ const MeterDetails = () => {
   const { color, text } = chipConfig[status];
 
   return (
-    <div className="flex flex-col items-center gap-4 p-6 w-full max-w-lg mx-auto">
+    <div
+      key={pathname}
+      className="flex flex-col items-center gap-4 p-6 w-full max-w-lg mx-auto"
+    >
       <h1 className="text-2xl font-bold text-center">Detalle del Medidor</h1>
       <p className="text-sm text-muted-foreground text-center">
         Acá podrás ver el detalle del medidor y el usuario

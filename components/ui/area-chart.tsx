@@ -37,7 +37,7 @@ const chartConfig = {
     label: "En linea",
     color: "hsl(var(--chart-success))",
   },
-  warning: {
+  alerta: {
     label: "Alerta",
     color: "hsl(var(--chart-warning))",
   },
@@ -61,7 +61,7 @@ const aggregateMetersByDay = (meters: AreaChartProps["meters"]) => {
   const weekData = daysOfWeek.map((day) => ({
     day,
     success: 0,
-    innactive: 0,
+    alerta: 0,
     error: 0,
   }));
 
@@ -79,7 +79,7 @@ const aggregateMetersByDay = (meters: AreaChartProps["meters"]) => {
         dayKey.success++;
         break;
       case "inactive":
-        dayKey.innactive++;
+        dayKey.alerta++;
         break;
       case "error":
         dayKey.error++;
@@ -162,8 +162,8 @@ export function AreaChartComponent({ meters, isLoading }: AreaChartProps) {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickCount={4} // Adjust as needed
-              domain={[0, "dataMax"]} // Ensure it scales dynamically
+              tickCount={4}
+              domain={[0, "dataMax"]}
             />
             <ChartTooltip
               cursor={false}
@@ -178,7 +178,7 @@ export function AreaChartComponent({ meters, isLoading }: AreaChartProps) {
               stackId="a"
             />
             <Area
-              dataKey="innactive"
+              dataKey="alerta"
               type="basis"
               fill="#f0ad4e"
               fillOpacity={0.4}
