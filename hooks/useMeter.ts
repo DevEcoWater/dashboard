@@ -16,14 +16,18 @@ export function useMeter(id: string) {
   return useQuery({
     queryKey: ["meter", id],
     queryFn: async () => {
-      const response = await fetch(`/api/get-meter/${id}`);
+      const response = await fetch(`/api/get-meter/${id}`, {
+        cache: "no-store",
+      });
 
-      console.log(response, "response");
       if (!response.ok) {
         throw new Error("Failed to fetch meter");
       }
       return response.json();
     },
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 }
 
@@ -31,14 +35,21 @@ export function useMeters() {
   return useQuery({
     queryKey: ["meters-list"],
     queryFn: async () => {
-      const response = await fetch("/api/get-meters");
+      const response = await fetch("/api/get-meters", {
+        cache: "no-store",
+      });
+
       if (!response.ok) {
         throw new Error("Failed to fetch meters");
       }
       return response.json();
     },
+    staleTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
   });
 }
+
 export const useMeterMutation = (): UseMutationResult<
   void,
   Error,

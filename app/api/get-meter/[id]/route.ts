@@ -16,7 +16,13 @@ export async function GET(
       model: "Client",
     });
 
-    return NextResponse.json(meter, { status: 200 });
+    return NextResponse.json(meter, {
+      headers: {
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
+      status: 200,
+    });
   } catch (error) {
     console.error("Error fetching meter:", error);
 

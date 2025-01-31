@@ -22,7 +22,16 @@ export async function POST(request: Request) {
       coordinates,
     });
 
-    return NextResponse.json({ meter }, { status: 201 });
+    return NextResponse.json(
+      { meter },
+      {
+        headers: {
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+        status: 201,
+      }
+    );
   } catch (error) {
     console.error("Error creating a meter:", error);
 

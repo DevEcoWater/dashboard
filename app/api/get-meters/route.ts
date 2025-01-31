@@ -9,7 +9,13 @@ export async function GET(request: Request) {
     const meters = await Meter.find();
 
     // Return the users with their meters
-    return NextResponse.json(meters, { status: 200 });
+    return NextResponse.json(meters, {
+      headers: {
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
+      status: 200,
+    });
   } catch (error) {
     console.error("Error fetching users with meters:", error);
 
