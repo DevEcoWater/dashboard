@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Meter from "@/models/Meter";
 import dbConnect from "@/utils/mongodb";
 import Client from "@/models/Client";
+export const dynamic = "force-static";
 
 export async function GET(
   request: Request,
