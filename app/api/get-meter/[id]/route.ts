@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Meter from "@/models/Meter";
 import dbConnect from "@/utils/mongodb";
+import Client from "@/models/Client";
 
 export async function GET(
   request: Request,
@@ -13,7 +14,7 @@ export async function GET(
 
     const meter = await Meter.findById({ _id: id }).populate({
       path: "userId",
-      model: "Client",
+      model: Client,
     });
 
     return NextResponse.json(meter, {
