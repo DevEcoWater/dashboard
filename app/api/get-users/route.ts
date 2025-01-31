@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Users from "@/models/Client";
 import Meter from "@/models/Meter";
 import dbConnect from "@/utils/mongodb";
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   try {
