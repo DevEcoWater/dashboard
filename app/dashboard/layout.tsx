@@ -15,6 +15,9 @@ import { SessionClient } from "./session";
 import { BreadcrumbWithContext } from "@/components/breadcrumb";
 import SidebarProvider from "@/context/sidebarProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { Avatar } from "@/components/ui/avatar";
+import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import Profile from "@/components/profile";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -44,9 +47,13 @@ export default function RootLayout({
               <ThemeProvider attribute="class" defaultTheme="light">
                 <AppSidebar />
                 <SidebarInset>
-                  <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-                    <SidebarTrigger className="-ml-1" />
-                    <Separator className="mr-2 h-4" /> <BreadcrumbWithContext />
+                  <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 justify-between">
+                    <div className="flex items-center">
+                      <SidebarTrigger className="-ml-1" />
+                      <Separator className="mr-2 h-4" />{" "}
+                      <BreadcrumbWithContext />
+                    </div>
+                    <Profile />
                   </header>
                   <main className="flex flex-1 flex-col gap-4 p-4">
                     <section className="min-h-screen flex-1">

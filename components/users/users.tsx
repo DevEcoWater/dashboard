@@ -31,8 +31,8 @@ const Users = () => {
       header: "Estado actual",
       cell: ({ row }) => {
         const status = row.original.meter.status as MeterStatus;
-        const { color, text } = chipConfig[status];
-        return <Chip text={text} backgroundColor={color} />;
+        const { label } = chipConfig[status];
+        return <Chip status={status} text={label} />;
       },
     },
     {

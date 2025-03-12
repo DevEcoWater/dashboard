@@ -52,14 +52,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <div className="p-2 w-full mb-2">
-        <Button
-          onClick={() => signOut({ callbackUrl: "/auth/login" })}
-          className="w-full"
-        >
-          Salir
-        </Button>
-      </div>
       <SidebarRail />
     </Sidebar>
   );
