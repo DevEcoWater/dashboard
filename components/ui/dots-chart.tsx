@@ -7,7 +7,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -19,11 +18,6 @@ import {
 } from "@/components/ui/chart";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-
-interface IDotsChartProps {
-  title: string;
-  subtitle: string;
-}
 
 const timeframes = {
   "1 dia": [
@@ -53,7 +47,9 @@ const timeframes = {
     { time: "Agosto", value: 5 },
     { time: "Septiembre", value: 36 },
   ],
-};
+} as const;
+
+type TimeframeKey = keyof typeof timeframes;
 
 const chartConfig = {
   desktop: {
@@ -66,8 +62,14 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+interface IDotsChartProps {
+  title: string;
+  subtitle: string;
+}
+
 const DotsChart: React.FC<IDotsChartProps> = ({ title, subtitle }) => {
-  const [selectedTimeframe, setSelectedTimeframe] = useState("1 dia");
+  const [selectedTimeframe, setSelectedTimeframe] =
+    useState<TimeframeKey>("1 dia");
   const chartData = timeframes[selectedTimeframe];
 
   return (
@@ -82,7 +84,7 @@ const DotsChart: React.FC<IDotsChartProps> = ({ title, subtitle }) => {
             <Button
               key={key}
               variant={selectedTimeframe === key ? "default" : "outline"}
-              onClick={() => setSelectedTimeframe(key)}
+              onClick={() => setSelectedTimeframe(key as TimeframeKey)}
             >
               {key}
             </Button>
@@ -91,7 +93,7 @@ const DotsChart: React.FC<IDotsChartProps> = ({ title, subtitle }) => {
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={[...chartData]}
             margin={{
               left: 12,
               right: 12,
@@ -104,9 +106,7 @@ const DotsChart: React.FC<IDotsChartProps> = ({ title, subtitle }) => {
               axisLine={false}
               tickMargin={8}
             />
-
             <YAxis tickLine={false} axisLine={false} tickMargin={8} />
-
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}

@@ -12,7 +12,8 @@ const Summary: React.FC<ISummary> = ({ meters, isLoading }) => {
     !isLoading &&
     meters.reduce(
       (acc: Record<MeterStatus, number>, meter: any) => {
-        acc[meter.status] = (acc[meter.status] || 0) + 1;
+        acc[meter.status as MeterStatus] =
+          (acc[meter.status as MeterStatus] || 0) + 1;
         return acc;
       },
       { active: 0, inactive: 0, error: 0, default: meters.length }
@@ -53,7 +54,7 @@ const Summary: React.FC<ISummary> = ({ meters, isLoading }) => {
           title={data.title}
           value={data.value}
           icon={data.icon}
-          status={data.status}
+          status={data.status as MeterStatus}
           isLoading={isLoading}
         />
       ))}

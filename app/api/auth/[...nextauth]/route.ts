@@ -24,7 +24,6 @@ const authOptions: NextAuthOptions = {
         const user = await User.findOne({ email });
 
         if (user && (await bcrypt.compare(password, user.password))) {
-          console.log("llegue");
           return {
             id: user._id.toString(),
             email: user.email,

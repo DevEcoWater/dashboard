@@ -14,8 +14,6 @@ export async function POST(request: any) {
     const body = await request.json();
     const { username, email, password } = body;
 
-    console.log(body, "body");
-
     if (!email || !password || !username) {
       return new Response(
         JSON.stringify({ message: "Faltan datos necesarios" }),

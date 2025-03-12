@@ -62,7 +62,6 @@ export const useUserMutation = () => {
   return useMutation<UserResponse, Error, UserFormData, unknown>({
     mutationFn: createUser,
     onSuccess: (data) => {
-      console.log("User created:", data);
       queryClient.invalidateQueries({ queryKey: ["users"] }); // Corrected invalidateQueries usage
     },
     onError: (error) => {
